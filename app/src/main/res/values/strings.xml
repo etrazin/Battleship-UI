@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Battleship</string>
+    <string name="prompt_email">site@example.com</string>
+    <string name="password">password</string>
+    <string name="title_activity_game_play">GamePlayActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
