@@ -9,7 +9,7 @@ import okhttp3.RequestBody;
 public class OkHttpHelper {
 
     // HTTP POST request helper
-    public static Request PreparePost(User user,String url)
+    public static Request preparePost(User user,String url)
     {
         //todo: make work for any object not just user
         Gson gson=new Gson();
@@ -25,4 +25,11 @@ public class OkHttpHelper {
 
         return request;
     }
+
+    public static Request prepareGetStats(String username){
+        String url = "http://10.0.2.2:8080/user/stats?userId=" + username;
+        Request request = new Request.Builder().url(url).build();
+        return request;
+    }
+
 }
