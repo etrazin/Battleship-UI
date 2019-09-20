@@ -16,6 +16,9 @@ import okhttp3.Callback;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String USER_NAME = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -27,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     //if registration succcessful -> move to "choose game" screen
     public void register(android.view.View view)
     {
+
         //get content of username and password fields
-        String username=GetFieldText(R.id.email);
+        final String username=GetFieldText(R.id.user_name);
         String password=GetFieldText(R.id.password);
 
         ToastIfFieldIsEmptyOrWhiteSpace(username,password);
@@ -36,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         User user=new User(username,password);
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.PreparePost(user,"http://ef162c8e.ngrok.io/user/register");//todo enter url dynamically?read from config file?
+        Request request = OkHttpHelper.preparePost(user,"http://10.0.2.2:8080/user/register");//todo enter url dynamically?read from config file?
+
+        toastString("about to make a newCall");
 
         try
         {
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ToastString("Bad request!");
+                            toastString("Bad request!");
                         }
                     });
                 }
@@ -61,27 +67,36 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("Registration succeeded!");
-                                EmptyActivity e=new EmptyActivity();
-                                SwitchActivity(e);
+                                toastString("Registration succeeded!");
+                                switchToMainScreen(username);
                             }
                         });
                     }
-                    if(response.code()==403)
+                    else if(response.code()==403)
                     {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("User already exists!");
+                                toastString("User already exists!");
+                                switchToMainScreen(username);
                             }
                         });
                     }
-                    if(response.code()==500)
+                    else if(response.code()==500)
                     {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("Server error!");
+                                toastString("Server error!");
+                            }
+                        });
+                    }
+                    else
+                    {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                toastString("Bad request!");
                             }
                         });
                     }
@@ -90,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
+            toastString("Exception");
 
         }
     }
@@ -100,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(android.view.View view)
     {
         //get content of username and password fields
-        String username=GetFieldText(R.id.email);
+        final String username=GetFieldText(R.id.user_name);
         String password=GetFieldText(R.id.password);
 
         ToastIfFieldIsEmptyOrWhiteSpace(username,password);
@@ -110,14 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.PreparePost(user,"http://ef162c8e.ngrok.io/user/login");//todo enter url dynamically?read from config file?
+        Request request = OkHttpHelper.preparePost(user,"http://10.0.2.2:8080/user/login");//todo enter url dynamically?read from config file?
 
         try
         {
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    ToastString("Bad request!");
+                public void onFailure(Call call, IOException e)
+                {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toastString("bad request!");
+                        }
+                    });
                 }
 
                 @Override
@@ -127,26 +149,25 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("Login succeeded!");
-                                EmptyActivity e=new EmptyActivity();
-                                SwitchActivity(e);
+                                toastString("Login succeeded!");
+                                switchToMainScreen(username);
                             }
                         });
                     }
-                    if(response.code()==403)
+                    else if(response.code()==403)
                     {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("Login failed!");
+                                toastString("Login failed!");
                             }
                         });                    }
-                    if(response.code()==500)
+                    else if(response.code()==500)
                     {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastString("Server error!");
+                                toastString("Server error!");
                             }
                         });
                     }
@@ -155,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-
+            toastString("Exception");
         }
     }
 
@@ -170,28 +191,28 @@ public class MainActivity extends AppCompatActivity {
     {
         if(emailAddress.length()<8)
         {
-            ToastString("email address too short");
+            toastString("email address too short");
         }
         if(password.length()<8)
         {
-            ToastString("password too short");
+            toastString("password too short");
         }
     }
 
-    private void ToastIfFieldIsEmptyOrWhiteSpace(String emailAddress, String password)
+    private void ToastIfFieldIsEmptyOrWhiteSpace(String userName, String password)
     {
-        if(emailAddress.isEmpty()||emailAddress.trim().length()==0)
+        if(userName.isEmpty()||userName.trim().length()==0)
         {
-            ToastString("enter email address");
+            toastString("enter email address");
         }
 
-        if(password.isEmpty()||emailAddress.trim().length()==0)
+        if(password.isEmpty()||userName.trim().length()==0)
         {
-            ToastString("enter password");
+            toastString("enter password");
         }
     }
 
-    private void ToastString(String toastContent)
+    private void toastString(String toastContent)
     {
         Context context = getApplicationContext();
 
@@ -202,9 +223,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void SwitchActivity(Activity newActivity)
-    {
-        Intent intent=new Intent(this,newActivity.getClass());
+    void switchToMainScreen(String username){
+        Intent intent = new Intent(this, MainScreen.class);
+        intent.putExtra(USER_NAME, username);
         startActivity(intent);
     }
 }
