@@ -202,10 +202,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onButtonClick(android.view.View view)
+    {
+        MyBoardActivity m=new MyBoardActivity();
+        SwitchActivity(m);
+    }
+
     void SwitchActivity(Activity newActivity)
     {
         Intent intent=new Intent(this,newActivity.getClass());
         startActivity(intent);
     }
+
 }
 
