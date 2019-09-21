@@ -2,9 +2,13 @@ package com.example.battleship;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -18,19 +22,27 @@ import okhttp3.Response;
 
 public class MainScreen extends AppCompatActivity {
 
+    public static final String GAME_ID = "";
+    String username;
+    OkHttpClient client;
+    Request request;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        //Get username from auth screen
+        Intent intent = getIntent();
+        username = intent.getStringExtra(MainActivity.USER_NAME);
+
+        client = new OkHttpClient();
         fillStats();
     }
 
+    //Fills the player's statistics
     void fillStats(){
-        Intent intent = getIntent();
-        final String username = intent.getStringExtra(MainActivity.USER_NAME);
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.prepareGetStats(username);
+        request = OkHttpHelper.prepareGet(username, "user", "stats");
 
         try{
             client.newCall(request).enqueue(new Callback() {
@@ -39,7 +51,7 @@ public class MainScreen extends AppCompatActivity {
                     MainScreen.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println("in onfailure");
+                            System.out.println("in onFailure at fillStats");
                         }
                     });
                 }
@@ -47,7 +59,7 @@ public class MainScreen extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if(response.isSuccessful()){
-                        final String jsonStats = response.body().string();
+                        String jsonStats = response.body().string();
                         Gson gson = new Gson();
                         final UserStats userStats = gson.fromJson(jsonStats, UserStats.class);
                         MainScreen.this.runOnUiThread(new Runnable() {
@@ -72,7 +84,96 @@ public class MainScreen extends AppCompatActivity {
                 }
             });
         }catch (Exception e){
-            System.out.println("exception");
+            System.out.println("exception while trying to get user stats");
         }
+    }
+
+
+    public void startNewGame(android.view.View view){
+        request = OkHttpHelper.prepareGet(username,"game", "new");
+        try{
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    MainScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("in onFailure at startNewGame");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if(response.isSuccessful()){
+                        final String gameID = response.body().string();
+                        MainScreen.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                switchToGamePlayScreen(gameID);
+                            }
+                        });
+                    }
+                }
+            });
+        }catch(Exception e){
+            System.out.println("exception while trying to get a new game ID");
+        }
+    }
+
+
+    public void joinExistingGame(View view) {
+
+        EditText gameIdEditText = (EditText) findViewById(R.id.game_id);
+        String gameID = gameIdEditText.getText().toString();
+
+        String[] queries = {username, gameID};
+        request = OkHttpHelper.prepareGet(queries, "game", "join");
+
+        try{
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    MainScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("in onFailure at joinExistingGame");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String joinGameResponse = response.body().string();
+                    System.out.println("response for trying to join an existing game: " + joinGameResponse);
+                    MainScreen.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toastString(joinGameResponse);
+                            if(response.isSuccessful())switchToGamePlayScreen(joinGameResponse);
+                            ;
+                        }
+                    });
+                }
+            });
+        }catch (Exception e){
+            System.out.println("Exception while trying to join an existing game");
+        }
+    }
+
+    private void toastString(String toastContent)
+    {
+        Context context = getApplicationContext();
+
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context,toastContent , duration);
+        toast.show();
+    }
+
+    void switchToGamePlayScreen(String gameID){
+        Intent intent = new Intent(this, GameplayActivity.class);
+        intent.putExtra(GAME_ID, gameID);
+        startActivity(intent);
     }
 }

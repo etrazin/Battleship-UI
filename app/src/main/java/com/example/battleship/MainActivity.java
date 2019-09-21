@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         User user=new User(username,password);
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.preparePost(user,"http://10.0.2.2:8080/user/register");//todo enter url dynamically?read from config file?
-
-        toastString("about to make a newCall");
+        Request request = OkHttpHelper.preparePost(user,"user", "register");
 
         try
         {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.preparePost(user,"http://10.0.2.2:8080/user/login");//todo enter url dynamically?read from config file?
+        Request request = OkHttpHelper.preparePost(user,"user", "login");//todo enter url dynamically?read from config file?
 
         try
         {
@@ -220,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context,toastContent , duration);
         toast.show();
-
     }
 
     void switchToMainScreen(String username){
