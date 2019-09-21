@@ -7,15 +7,14 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="85dp"
         android:layout_marginTop="205dp"
-        android:autofillHints="@string/prompt_email"
         android:ems="10"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
+        android:hint="@string/prompt_user_name"
+        android:autofillHints="@string/prompt_user_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,20 +23,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:autofillHints="password"
         android:ems="10"
         android:hint="@string/password"
+        android:autofillHints="password"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintStart_toStartOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
-        android:onClick="login"
         android:text="Login"
+        android:onClick="login"
         app:layout_constraintBaseline_toBaselineOf="@+id/register"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -47,20 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="92dp"
         android:layout_marginBottom="152dp"
-        android:onClick="register"
         android:text="Register"
+        android:onClick="register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="42dp"
-        android:onClick="onButtonClick"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
