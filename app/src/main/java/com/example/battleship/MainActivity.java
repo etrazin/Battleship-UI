@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Context;
@@ -220,6 +221,17 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public void onButtonClickForTesting(View view)
+    {
+        MyBoardActivity m=new MyBoardActivity();
+        SwitchActivity(m);
+    }
+    public void SwitchActivity(Activity activity)
+    {
+        Intent intent=new Intent(this,activity.getClass());
+        startActivity(intent);
+
+    }
     void switchToMainScreen(String username){
         Intent intent = new Intent(this, MainScreen.class);
         intent.putExtra(USER_NAME, username);

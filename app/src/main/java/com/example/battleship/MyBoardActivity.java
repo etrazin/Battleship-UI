@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class MyBoardActivity extends AppCompatActivity {
-    //private Activity _opponentBoard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
