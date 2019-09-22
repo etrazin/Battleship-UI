@@ -226,9 +226,10 @@ public class MainActivity extends AppCompatActivity {
         MyBoardActivity m=new MyBoardActivity();
         SwitchActivity(m);
     }
-    public void SwitchActivity(Activity activity)
+    public void SwitchActivity(Activity newActivity)
     {
-        Intent intent=new Intent(this,activity.getClass());
+        Intent intent=new Intent(this,newActivity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
 
     }
