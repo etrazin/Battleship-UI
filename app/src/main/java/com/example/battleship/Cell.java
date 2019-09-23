@@ -22,6 +22,6 @@ public class Cell {
     }
 
     public enum Status {
-        VACANT, OCCUPIED, HIT, MISSED
+        VACANT, OCCUPIED, MISSED,INVALID
     }
 }

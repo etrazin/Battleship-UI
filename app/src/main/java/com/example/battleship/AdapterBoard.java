@@ -30,9 +30,7 @@ public class AdapterBoard extends ArrayAdapter<Cell> {
 
         Button button = (Button) view.findViewById(R.id.button_board_cell);
 
-        if (cell.getStatus() == Cell.Status.HIT)
-            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorHit));
-        else if (cell.getStatus() == Cell.Status.MISSED)
+        if (cell.getStatus() == Cell.Status.MISSED)
             button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMissed));
 
         else if (cell.getPlayerNum() == 2)

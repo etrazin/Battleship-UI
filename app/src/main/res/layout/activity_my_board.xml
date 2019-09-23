@@ -6,6 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".MyBoardActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Board"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/placeShips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeShips"
+        app:layout_constraintBottom_toTopOf="@id/my_board_grid"/>
+
+
+    <GridView
+        android:id="@+id/my_board_grid"
+        style="@style/StyleGridViewBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instructions"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="27dp"></GridView>
+    />
+
+    <Button
+        android:id="@+id/commit_ships"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commit Ships"
+        app:layout_constraintTop_toBottomOf="@id/my_board_grid"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="584dp"
+        android:onClick="commitShips"/>
+
     <Button
         android:id="@+id/button4"
         android:layout_width="395dp"
@@ -18,24 +64,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Board"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <GridView
-        android:id="@+id/my_board_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="27dp"
-        style="@style/StyleGridViewBoard"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
