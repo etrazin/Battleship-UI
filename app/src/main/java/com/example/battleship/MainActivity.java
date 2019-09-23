@@ -1,20 +1,22 @@
 package com.example.battleship;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Context;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Call;
-import okhttp3.Callback;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -223,8 +225,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonClickForTesting(View view)
     {
-        MyBoardActivity m=new MyBoardActivity();
-        SwitchActivity(m);
+        Intent intent = new Intent(this, OpponentBoardActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("GAME_ID", "6909b894-9147-437b-96ac-cce80b6cb18b");
+        extras.putString("USER_NAME", "345");
+        intent.putExtras(extras);
+        startActivity(intent);
+
+        //MyBoardActivity m=new MyBoardActivity();
+        //SwitchActivity(m);
     }
     public void SwitchActivity(Activity newActivity)
     {

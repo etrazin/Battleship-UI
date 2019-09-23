@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".OpponentBoardActivity">
 
+    <TextView
+        android:id="@+id/opponentsBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Opponent's Board"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attackShips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opponentsBoard" />
+
+    <GridView
+        android:id="@+id/opponent_board_grid"
+        style="@style/StyleGridViewBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/attackShips"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="27dp"></GridView>
+    />
+
     <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
@@ -19,12 +45,5 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <TextView
-        android:id="@+id/texxtView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Opponent Board"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
