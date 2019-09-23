@@ -14,8 +14,10 @@ public class GameplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gameplay);
 
         Intent intent = getIntent();
-        String gameID = intent.getStringExtra(MainScreen.GAME_ID);
+        Bundle extras = intent.getExtras();
+        String gameID = extras.getString("GAME_ID");
+        String username = extras.getString("USER_NAME");
         TextView temp = (TextView) findViewById(R.id.temp);
-        temp.append(gameID);
+        temp.setText("hi " + username + ", your game ID is: " + gameID);
     }
 }

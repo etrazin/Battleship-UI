@@ -14,7 +14,7 @@
         <activity android:name=".MyBoardActivity"></activity>
         <activity android:name=".OpponentBoardActivity" />
         <activity android:name=".GameplayActivity" />
-        <activity android:name=".EmptyActivity" />
+        <activity android:name=".MainScreen" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -35,7 +35,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="27dp"
-        style="@style/StyleGridViewBoard"></GridView>
-    />
+        style="@style/StyleGridViewBoard"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,7 +60,6 @@ public class OkHttpHelper {
 
         String url = builder.build().toString();
 
-        //String url = HOST_AND_PORT + path + username;
         Request request = new Request.Builder()
                 .url(url)
                 .build();

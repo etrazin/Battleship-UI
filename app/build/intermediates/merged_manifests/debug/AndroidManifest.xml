@@ -20,8 +20,10 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.battleship.MainScreen" />
+        <activity android:name="com.example.battleship.MyBoardActivity" />
+        <activity android:name="com.example.battleship.OpponentBoardActivity" />
         <activity android:name="com.example.battleship.GameplayActivity" />
+        <activity android:name="com.example.battleship.MainScreen" />
         <activity android:name="com.example.battleship.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
