@@ -32,6 +32,8 @@
         tools:layout_editor_absoluteY="27dp"></GridView>
     />
 
+
+
     <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
@@ -44,6 +46,86 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+
+    <LinearLayout
+        android:id="@+id/redHelp"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/redHelp"
+        app:layout_constraintTop_toBottomOf="@id/opponent_board_grid"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/redHit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Hit " />
+
+        <TextView
+            android:id="@+id/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorHit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/whiteHelp"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/redHelp"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/whiteMiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Miss" />
+
+        <TextView
+            android:id="@+id/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorMissed" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/greyHelp"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteHelp"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/greyNeutral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Unselected" />
+
+        <TextView
+            android:id="@+id/grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorVacant" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
