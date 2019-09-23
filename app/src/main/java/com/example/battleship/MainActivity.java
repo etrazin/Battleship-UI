@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         User user=new User(username,password);
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.preparePost(user,"user", "register");
+        Request request = OkHttpHelper.preparePost(user, null, null, "user", "register");
+        System.out.println("from MainActivity the json string is: " + request.body().toString());
 
         try
         {
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         OkHttpClient client = new OkHttpClient();
-        Request request = OkHttpHelper.preparePost(user,"user", "login");//todo enter url dynamically?read from config file?
+        Request request = OkHttpHelper.preparePost(user, null, null, "user", "login");//todo enter url dynamically?read from config file?
 
         try
         {

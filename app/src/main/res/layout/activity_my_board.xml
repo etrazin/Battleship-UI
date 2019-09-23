@@ -53,7 +53,7 @@
         android:onClick="commitShips"/>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/show_opponent_board"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -62,7 +62,8 @@
         android:text="Show Opponent Board"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
 
 
 

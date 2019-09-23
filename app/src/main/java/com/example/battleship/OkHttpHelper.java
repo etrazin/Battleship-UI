@@ -24,10 +24,11 @@ public class OkHttpHelper {
 
         String url = builder.build().toString();
 
-        System.out.println("the url in the generic preparePost is: " + url);
 
         Gson gson=new Gson();
         String content=gson.toJson(payLoad);
+
+
 
         MediaType PLAIN=MediaType.parse("text/plain");
 
