@@ -15,6 +15,31 @@ public class OkHttpHelper {
     //Define here the host. (localhost:8080 / 10.0.2.2:8080 / ngrok url)
     public static final String HOST_AND_PORT = "10.0.2.2:8080"; //todo enter url dynamically?read from config file?
 
+    public static Request preparePost(Object payLoad, String queryKey, String queryValue, String ... path ){
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .encodedAuthority(HOST_AND_PORT);
+        for(String pathParameter : path) builder.appendPath(pathParameter);
+        if(queryKey != null) builder.appendQueryParameter(queryKey, queryValue);
+
+        String url = builder.build().toString();
+
+        System.out.println("the url in the generic preparePost is: " + url);
+
+        Gson gson=new Gson();
+        String content=gson.toJson(payLoad);
+
+        MediaType PLAIN=MediaType.parse("text/plain");
+
+        RequestBody body = RequestBody.create(PLAIN, content);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        return request;
+    }
+/*
     //Prepares a Post request for loging or register a new user
     public static Request preparePost(User user, String ... path){
 
@@ -49,7 +74,7 @@ public class OkHttpHelper {
     }
     */
 
-    //Prepares a Get request for geting stats and for starting a new game
+    //Prepares a Get request for: getStats, getStatus, newGame
     public static Request prepareGet(String username, String ... path){
 
         Uri.Builder builder = new Uri.Builder();
@@ -67,7 +92,7 @@ public class OkHttpHelper {
         return request;
     }
 
-    //Prepares a Get request for joining an existing game
+    //Prepares a Get request for joinGame
     public static Request prepareGet(String[]queries, String ... path){
 
         Uri.Builder builder = new Uri.Builder();
