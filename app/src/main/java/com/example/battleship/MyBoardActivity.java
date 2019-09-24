@@ -30,7 +30,7 @@ import okhttp3.Response;
 public class MyBoardActivity extends AppCompatActivity {
 
     //todo: part of settings should include explanation on battleship rules/gameplay
-    private static final int MAX_SHIPS_NUMBER= 3;
+    private static final int MAX_SHIPS_NUMBER= 8;
     private AdapterBoard _myBoard;  //java class representing board
     private GridView _myBoardGrid;  //board view - to interact with xml object
     private GridPoint _currentlySelectedSquare;  //square most recently selected by user
@@ -212,7 +212,7 @@ public class MyBoardActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, final Response response) throws IOException {
                     if(response.isSuccessful()){
 
                         MyBoardActivity.this.runOnUiThread(new Runnable() {
@@ -229,6 +229,11 @@ public class MyBoardActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 toastString("Invalid user name, game ID or ships placement");
+                                try {
+                                    System.out.println(response.body().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     }
@@ -264,7 +269,12 @@ public class MyBoardActivity extends AppCompatActivity {
                     //When both player commited ships, the game state changes from 'PLACEMENT' to 'PLAy'
                     if(gameState.equals("PLAY")){
                         t.cancel();
-                        setVisibleOpponentBoardButton();
+                        MyBoardActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setVisibleOpponentBoardButton();
+                            }
+                        });
                     }
                 }catch (Exception e){
                     toastString("Failed to wait for the second player to commit ships");
