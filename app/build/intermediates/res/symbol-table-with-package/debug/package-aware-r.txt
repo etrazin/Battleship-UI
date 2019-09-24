@@ -1086,6 +1086,7 @@ id always
 id async
 id attackShips
 id auto
+id back_to_main_screen
 id barrier
 id beginning
 id blocking

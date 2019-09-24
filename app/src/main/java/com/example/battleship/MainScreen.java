@@ -38,33 +38,13 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        setVisibility();
 
         //Get username from auth screen
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.USER_NAME);
-        if(username==null)intent.getStringExtra(OpponentBoardActivity.USER_NAME);
 
         client = new OkHttpClient();
         fillStats();
-    }
-
-    public void setVisibility(){
-        EditText gameIdEditText = (EditText) findViewById(R.id.game_id);
-        Button joinGameButton = (Button) findViewById(R.id.join_existing_game);
-        Button startnewGame = (Button) findViewById(R.id.start_new_game);
-        TextView yourGameId = (TextView) findViewById(R.id.your_game_id);
-        TextView newGameId = (TextView) findViewById(R.id.new_game_id);
-        TextView waitingForPlayer = (TextView) findViewById(R.id.waiting_for_player);
-
-        gameIdEditText.setVisibility(View.VISIBLE);
-        joinGameButton.setVisibility(View.VISIBLE);
-        startnewGame.setVisibility(View.VISIBLE);
-        yourGameId.setVisibility(View.INVISIBLE);
-        newGameId.setVisibility(View.INVISIBLE);
-        waitingForPlayer.setVisibility(View.INVISIBLE);
-
-
     }
 
     //Fills the player's statistics
@@ -202,19 +182,22 @@ public class MainScreen extends AppCompatActivity {
 
     //Show the new game ID and ask the user to wait for a second player
     void giveGameIdAndAskToWait(String gameID){
+
         EditText gameIdEditText = (EditText) findViewById(R.id.game_id);
         Button joinGameButton = (Button) findViewById(R.id.join_existing_game);
         Button startnewGame = (Button) findViewById(R.id.start_new_game);
         TextView yourGameId = (TextView) findViewById(R.id.your_game_id);
         TextView newGameId = (TextView) findViewById(R.id.new_game_id);
         TextView waitingForPlayer = (TextView) findViewById(R.id.waiting_for_player);
+        Button backToMainScreen = (Button) findViewById(R.id.back_to_main_screen);
 
-        gameIdEditText.setVisibility(View.INVISIBLE);
-        joinGameButton.setVisibility(View.INVISIBLE);
-        startnewGame.setVisibility(View.INVISIBLE);
+        gameIdEditText.setVisibility(View.GONE);
+        joinGameButton.setVisibility(View.GONE);
+        startnewGame.setVisibility(View.GONE);
         yourGameId.setVisibility(View.VISIBLE);
         newGameId.setVisibility(View.VISIBLE);
         waitingForPlayer.setVisibility(View.VISIBLE);
+        backToMainScreen.setVisibility(View.VISIBLE);
 
         yourGameId.setText("Your game ID is:");
         newGameId.setText(gameID);
@@ -256,5 +239,23 @@ public class MainScreen extends AppCompatActivity {
         extras.putString("USER_NAME", username);
         intent.putExtras(extras);
         startActivity(intent);
+    }
+
+    public void setBackVisibility(View view) {
+        EditText gameIdEditText = (EditText) findViewById(R.id.game_id);
+        Button joinGameButton = (Button) findViewById(R.id.join_existing_game);
+        Button startnewGame = (Button) findViewById(R.id.start_new_game);
+        TextView yourGameId = (TextView) findViewById(R.id.your_game_id);
+        TextView newGameId = (TextView) findViewById(R.id.new_game_id);
+        TextView waitingForPlayer = (TextView) findViewById(R.id.waiting_for_player);
+        Button backToMainScreen = (Button) findViewById(R.id.back_to_main_screen);
+
+        gameIdEditText.setVisibility(View.VISIBLE);
+        joinGameButton.setVisibility(View.VISIBLE);
+        startnewGame.setVisibility(View.VISIBLE);
+        yourGameId.setVisibility(View.INVISIBLE);
+        newGameId.setVisibility(View.INVISIBLE);
+        waitingForPlayer.setVisibility(View.INVISIBLE);
+        backToMainScreen.setVisibility(View.INVISIBLE);
     }
 }
