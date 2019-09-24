@@ -13,7 +13,7 @@ import okhttp3.RequestBody;
 public class OkHttpHelper {
 
     //Define here the host. (localhost:8080 / 10.0.2.2:8080 / ngrok url)
-    public static final String HOST_AND_PORT = "02fa23b8.ngrok.io"; //todo enter url dynamically?read from config file?
+    public static final String HOST_AND_PORT = "05e25297.ngrok.io"; //todo enter url dynamically?read from config file?
 
     public static Request preparePost(Object payLoad, String queryKey, String queryValue, String ... path ){
         Uri.Builder builder = new Uri.Builder();

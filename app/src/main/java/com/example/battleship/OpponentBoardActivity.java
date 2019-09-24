@@ -2,6 +2,7 @@ package com.example.battleship;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.battleship.ServerClasses.PlayResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,13 +28,13 @@ import okhttp3.Response;
 
 public class OpponentBoardActivity extends AppCompatActivity
 {
+    public static final String USER_NAME = "";
     private String _username;
     private String _gameId;
     private TextView _attackShips; //text that declares "attack opponent's ships"
     private GridView _opponentBoardGrid;
     private AdapterBoard _opponentBoard;
     private OkHttpClient _okHttpClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,86 +67,93 @@ public class OpponentBoardActivity extends AppCompatActivity
                 //when a square is selected ask server if its a hit or miss
                 //and change square color accordingly
                /// Gson gson=new Gson();
-                Point point=new Point();point.point=GridPoint.ConvertPositionToPoint(position);
+                Point point=new Point();
+                point.point=GridPoint.ConvertPositionToPoint(position);
+
                 //String payload=gson.toJson(point);
                 Request request = OkHttpHelper.preparePost(point, "userId", _username, "game", _gameId, "play");
 
                 _okHttpClient.newCall(request).enqueue(new Callback()
-               {
-                   @Override
-                   public void onResponse(Call call, Response response) throws IOException
-                   {
-                       switch (response.code())
-                       {
-                           case 200:
-                           {
-                               String responseBody=response.body().string();
-                               Gson gson=new Gson();
+                {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException
+                    {
+                        switch (response.code())
+                        {
+                            case 200:
+                            {//if its already been hit then don't let it change again
+                                String responseBody=response.body().string();
+                                Gson gson=new Gson();
 
-                               PlayResponse playResponse= gson.fromJson(responseBody,PlayResponse.class);
-                               Cell.Status status;
-                               if(playResponse.getHit())
-                               {
-                                   status=Cell.Status.HIT;
-                                   OpponentBoardActivity.this.runOnUiThread(new Runnable()
-                                   {
-                                       @Override
-                                       public void run() {
-                                           toastString("Hit!");}
+                                PlayResponse playResponse= gson.fromJson(responseBody,PlayResponse.class);
+                                Cell.Status status;
+                                if(playResponse.getHit())
+                                {
+                                    status=Cell.Status.HIT;
+                                    OpponentBoardActivity.this.runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run() {
+                                            toastString("Hit!");}
 
-                                   });
-                               }
-                               else
-                               {
-                                   status=Cell.Status.MISSED;
-                                   OpponentBoardActivity.this.runOnUiThread(new Runnable() {
-                                       @Override
-                                       public void run() {
-                                           toastString("Miss!");
-                                       }
-                                   });
-                               }
-                               SetSquareToHitOrMiss(parent,position,status);
-                               break;
-                           }
-                           case 403:
-                           {
-                               OpponentBoardActivity.this.runOnUiThread(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       toastString("Invalid!");
-                                   }
-                               });
-                               break;
-                           }
-                           case 500:
-                           {
-                               OpponentBoardActivity.this.runOnUiThread(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       toastString("Server error!");
-                                   }
-                               });
-                               break;
-                           }
-                       }
-                   }
-                   @Override
-                   public void onFailure(Call call, IOException e)
-                   {
-                       OpponentBoardActivity.this.runOnUiThread(new Runnable() {
-                           @Override
-                           public void run() {
-                               toastString("bad request!");
-                           }
-                       });
-                   }
-               });
+                                    });
+                                }
+                                else
+                                {
+                                    status=Cell.Status.MISSED;
+                                    OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            toastString("Miss!");
+                                        }
+                                    });
+                                }
+                                SetSquareToHitOrMiss(parent,position,status);
+                                checkIfGameEnds();
+                                break;
+                            }
+                            case 403:
+                            {
+                                OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toastString("Invalid!");
+                                    }
+                                });
+                                break;
+                            }
+                            case 500:
+                            {
+                                OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toastString("Server error!");
+                                    }
+                                });
+                                break;
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                toastString("bad request!");
+                            }
+                        });
+                    }
+                });
+
+
+
             }
         });
     }
 
     private void SetSquareToHitOrMiss(AdapterView<?> parent, int position, Cell.Status cellStatus) {
+
             OpponentBoardActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -151,7 +161,37 @@ public class OpponentBoardActivity extends AppCompatActivity
                 }
             });
             Cell cell = (Cell) parent.getAdapter().getItem(position);
-            cell.setStatus(cellStatus);
+            if(cell.getStatus()== Cell.Status.VACANT)
+            {
+                cell.setStatus(cellStatus);
+            }
+    }
+
+    public void checkIfGameEnds(){
+        Request request = OkHttpHelper.prepareGet(_username, "game", _gameId, "status");
+        try {
+            Response response = _okHttpClient.newCall(request).execute();
+            JsonParser parser = new JsonParser();
+            final JsonObject jsonObject = parser.parse(response.body().string()).getAsJsonObject();
+            final String gameState = jsonObject.get("state").getAsString();
+            if(gameState.equals("END")){
+                OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String winner = jsonObject.get("winner").getAsString();
+                        toastString("the winner is: " + winner);
+                        switchToMainScreen();
+                    }
+                });
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("Failed to check if game ended");
+            e.printStackTrace();
+        }
+
+
     }
 
     private void GetUsernameAndGameId()
@@ -164,6 +204,13 @@ public class OpponentBoardActivity extends AppCompatActivity
 
     public void ShowMyBoard(View view) {
         Intent i = new Intent(this, MyBoardActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+    }
+
+    public void switchToMainScreen(){
+        Intent i = new Intent(this, MainScreen.class);
+        i.putExtra(USER_NAME, _username);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
     }
