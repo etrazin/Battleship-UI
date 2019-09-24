@@ -30,16 +30,29 @@ public class AdapterBoard extends ArrayAdapter<Cell> {
 
         Button button = (Button) view.findViewById(R.id.button_board_cell);
 
-        if (cell.getStatus() == Cell.Status.MISSED)
-            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMissed));
-
-        else if (cell.getPlayerNum() == 2)
-            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorUnknown));
-
-        else if (cell.getStatus() == Cell.Status.VACANT)
-            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorVacant));
-        else
-            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorOccupied));
+        switch (cell.getStatus())
+        {
+            case HIT:
+            {
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorHit));
+                break;
+            }
+            case MISSED:
+            {
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMissed));
+                break;
+            }
+            case VACANT:
+            {
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorVacant));
+                break;
+            }
+            case OCCUPIED:
+            {
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorOccupied));
+                break;
+            }
+        }
 
         return view;
     }
@@ -47,9 +60,9 @@ public class AdapterBoard extends ArrayAdapter<Cell> {
     /**
      * populates board with vacant cells
      */
-    public void addCells(GridView gridView, int playerNum, int numCells) {
+    public void addCells(GridView gridView, int numCells) {
         gridView.setAdapter(this);
         for (int i = 0; i < numCells; i++)
-            this.add(new Cell(playerNum, Cell.Status.VACANT));
+            this.add(new Cell(Cell.Status.VACANT));
     }
 }

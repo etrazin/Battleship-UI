@@ -43,7 +43,7 @@ public class OpponentBoardActivity extends AppCompatActivity
         //todo: make board size dynamic andor use integers file from values
         _opponentBoardGrid = (GridView) findViewById(R.id.opponent_board_grid);
         _opponentBoard = new AdapterBoard(this, new ArrayList<Cell>());
-        _opponentBoard.addCells(_opponentBoardGrid, 1, 100);
+        _opponentBoard.addCells(_opponentBoardGrid,  100);
 
         _attackShips=findViewById(R.id.attackShips);
         _attackShips.setText("Attack opponent's ships by selecting squares on the board!");
@@ -79,7 +79,6 @@ public class OpponentBoardActivity extends AppCompatActivity
                            {
                                String responseBody=response.body().string();
                                Gson gson=new Gson();
-                               gson.fromJson(responseBody,Object.class);
 
                                PlayResponse playResponse= gson.fromJson(responseBody,PlayResponse.class);
                                Cell.Status status;
@@ -105,6 +104,7 @@ public class OpponentBoardActivity extends AppCompatActivity
                                    });
                                }
                                SetSquareToHitOrMiss(parent,position,status);
+                               break;
                            }
                            case 403:
                            {
@@ -114,6 +114,7 @@ public class OpponentBoardActivity extends AppCompatActivity
                                        toastString("Invalid!");
                                    }
                                });
+                               break;
                            }
                            case 500:
                            {
@@ -123,6 +124,7 @@ public class OpponentBoardActivity extends AppCompatActivity
                                        toastString("Server error!");
                                    }
                                });
+                               break;
                            }
                        }
                    }
@@ -142,7 +144,12 @@ public class OpponentBoardActivity extends AppCompatActivity
     }
 
     private void SetSquareToHitOrMiss(AdapterView<?> parent, int position, Cell.Status cellStatus) {
-            _opponentBoard.notifyDataSetChanged();
+            OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    _opponentBoard.notifyDataSetChanged();
+                }
+            });
             Cell cell = (Cell) parent.getAdapter().getItem(position);
             cell.setStatus(cellStatus);
     }

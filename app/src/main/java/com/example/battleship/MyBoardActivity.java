@@ -69,7 +69,7 @@ public class MyBoardActivity extends AppCompatActivity {
         //todo: make board size dynamic andor use integers file from values
         _myBoardGrid = (GridView) findViewById(R.id.my_board_grid);
         _myBoard = new AdapterBoard(this, new ArrayList<Cell>());
-        _myBoard.addCells(_myBoardGrid, 1, 100);
+        _myBoard.addCells(_myBoardGrid,  100);
 
         //setup onclick listener for game board
         SetupOnclickListener();
