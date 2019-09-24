@@ -63,10 +63,10 @@ public class OpponentBoardActivity extends AppCompatActivity
             {
                 //when a square is selected ask server if its a hit or miss
                 //and change square color accordingly
-                Gson gson=new Gson();
+               /// Gson gson=new Gson();
                 Point point=new Point();point.point=GridPoint.ConvertPositionToPoint(position);
-                String payload=gson.toJson(point);
-                Request request = OkHttpHelper.preparePost(payload, "userId", _username, "game", _gameId, "play");
+                //String payload=gson.toJson(point);
+                Request request = OkHttpHelper.preparePost(point, "userId", _username, "game", _gameId, "play");
 
                 _okHttpClient.newCall(request).enqueue(new Callback()
                {
