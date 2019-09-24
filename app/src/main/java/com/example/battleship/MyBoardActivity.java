@@ -263,8 +263,8 @@ public class MyBoardActivity extends AppCompatActivity {
             public void run() {
                 try {
                     Response response = client.newCall(request).execute();
-                    JsonObject jsonObj = parser.parse(response.body().string()).getAsJsonObject();
-                    String gameState = jsonObj.get("state").getAsString();
+                    JsonObject jsonObject = parser.parse(response.body().string()).getAsJsonObject();
+                    String gameState = jsonObject.get("state").getAsString();
 
                     //When both player commited ships, the game state changes from 'PLACEMENT' to 'PLAy'
                     if(gameState.equals("PLAY")){
