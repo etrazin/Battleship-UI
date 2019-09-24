@@ -1,17 +1,12 @@
 package com.example.battleship;
 
 public class Cell {
-    private int playerNum;
     private Status status;
 
-    public Cell(int playerNum, Status status) {
-        this.playerNum = playerNum;
+    public Cell( Status status) {
         this.status = status;
     }
 
-    public int getPlayerNum() {
-        return playerNum;
-    }
 
     public Status getStatus() {
         return status;
