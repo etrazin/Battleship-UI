@@ -104,6 +104,7 @@ public class OpponentBoardActivity extends AppCompatActivity
                                    });
                                }
                                SetSquareToHitOrMiss(parent,position,status);
+                               checkIfGameEnds();
                                break;
                            }
                            case 403:
@@ -160,6 +161,17 @@ public class OpponentBoardActivity extends AppCompatActivity
         Bundle extras = intent.getExtras();
         _gameId = extras.getString("GAME_ID");
         _username = extras.getString("USER_NAME");
+    }
+
+    public void checkIfGameEnds(){
+        Request request = OkHttpHelper.prepareGet(_username, "game", _gameId, "status");
+        try {
+            Response response = _okHttpClient.newCall(request).execute();
+        } catch (IOException e) {
+            System.out.println("failed to chek if game ended");
+            e.printStackTrace();
+        }
+
     }
 
     public void ShowMyBoard(View view) {
