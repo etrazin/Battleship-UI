@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         Request request = OkHttpHelper.preparePost(user, null, null, "user", "register");
-        System.out.println("from MainActivity the json string is: " + request.body().toString());
 
         try
         {
