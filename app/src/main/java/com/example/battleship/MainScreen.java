@@ -28,7 +28,7 @@ import okhttp3.Response;
 
 public class MainScreen extends AppCompatActivity {
 
-    static final int STATUS_REQUEST_INTERVAL = 2000;
+    static final int STATUS_REQUEST_INTERVAL = 10000;
 
     String username;
     OkHttpClient client;

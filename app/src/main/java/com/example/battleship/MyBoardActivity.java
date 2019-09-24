@@ -41,7 +41,7 @@ public class MyBoardActivity extends AppCompatActivity {
     private int _shipsNumber;  //1->8. number of ship currently being placed
     private ArrayList<GridPoint> _shipsPoints; //array which contains the coordinates of all the ships.
 
-    static final int STATUS_REQUEST_INTERVAL = 2000;
+    static final int STATUS_REQUEST_INTERVAL = 10000;
     String username;
     String gameID;
     OkHttpClient client;
@@ -93,9 +93,14 @@ public class MyBoardActivity extends AppCompatActivity {
 
 
     //switch to opponent's board activity
-    public void ShowOpponentBoard(android.view.View view)
+    public void showOpponentBoard(android.view.View view)
     {
+
         Intent i = new Intent(this, OpponentBoardActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("GAME_ID", gameID);
+        extras.putString("USER_NAME", username);
+        i.putExtras(extras);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
     }
@@ -228,12 +233,8 @@ public class MyBoardActivity extends AppCompatActivity {
                         MyBoardActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 toastString("Invalid user name, game ID or ships placement");
-                                try {
-                                    System.out.println(response.body().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
                             }
                         });
                     }
