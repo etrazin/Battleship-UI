@@ -38,13 +38,33 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        setVisibility();
 
         //Get username from auth screen
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.USER_NAME);
+        if(username==null)intent.getStringExtra(OpponentBoardActivity.USER_NAME);
 
         client = new OkHttpClient();
         fillStats();
+    }
+
+    public void setVisibility(){
+        EditText gameIdEditText = (EditText) findViewById(R.id.game_id);
+        Button joinGameButton = (Button) findViewById(R.id.join_existing_game);
+        Button startnewGame = (Button) findViewById(R.id.start_new_game);
+        TextView yourGameId = (TextView) findViewById(R.id.your_game_id);
+        TextView newGameId = (TextView) findViewById(R.id.new_game_id);
+        TextView waitingForPlayer = (TextView) findViewById(R.id.waiting_for_player);
+
+        gameIdEditText.setVisibility(View.VISIBLE);
+        joinGameButton.setVisibility(View.VISIBLE);
+        startnewGame.setVisibility(View.VISIBLE);
+        yourGameId.setVisibility(View.INVISIBLE);
+        newGameId.setVisibility(View.INVISIBLE);
+        waitingForPlayer.setVisibility(View.INVISIBLE);
+
+
     }
 
     //Fills the player's statistics
@@ -189,9 +209,9 @@ public class MainScreen extends AppCompatActivity {
         TextView newGameId = (TextView) findViewById(R.id.new_game_id);
         TextView waitingForPlayer = (TextView) findViewById(R.id.waiting_for_player);
 
-        gameIdEditText.setVisibility(View.GONE);
-        joinGameButton.setVisibility(View.GONE);
-        startnewGame.setVisibility(View.GONE);
+        gameIdEditText.setVisibility(View.INVISIBLE);
+        joinGameButton.setVisibility(View.INVISIBLE);
+        startnewGame.setVisibility(View.INVISIBLE);
         yourGameId.setVisibility(View.VISIBLE);
         newGameId.setVisibility(View.VISIBLE);
         waitingForPlayer.setVisibility(View.VISIBLE);

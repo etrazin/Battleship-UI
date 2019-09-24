@@ -1100,6 +1100,7 @@ id center_vertical
 id chains
 id checkbox
 id chronometer
+id clear
 id clip_horizontal
 id clip_vertical
 id collapseActionView

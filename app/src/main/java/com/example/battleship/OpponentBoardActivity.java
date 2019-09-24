@@ -2,6 +2,7 @@ package com.example.battleship;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.battleship.ServerClasses.PlayResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import okhttp3.Response;
 
 public class OpponentBoardActivity extends AppCompatActivity
 {
+    public static final String USER_NAME = "";
     private String _username;
     private String _gameId;
     private TextView _attackShips; //text that declares "attack opponent's ships"
@@ -105,6 +109,7 @@ public class OpponentBoardActivity extends AppCompatActivity
                                     });
                                 }
                                 SetSquareToHitOrMiss(parent,position,status);
+                                checkIfGameEnds();
                                 break;
                             }
                             case 403:
@@ -162,6 +167,33 @@ public class OpponentBoardActivity extends AppCompatActivity
             }
     }
 
+    public void checkIfGameEnds(){
+        Request request = OkHttpHelper.prepareGet(_username, "game", _gameId, "status");
+        try {
+            Response response = _okHttpClient.newCall(request).execute();
+            JsonParser parser = new JsonParser();
+            final JsonObject jsonObject = parser.parse(response.body().string()).getAsJsonObject();
+            final String gameState = jsonObject.get("state").getAsString();
+            if(gameState.equals("END")){
+                OpponentBoardActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String winner = jsonObject.get("winner").getAsString();
+                        toastString("the winner is: " + winner);
+                        switchToMainScreen();
+                    }
+                });
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("Failed to check if game ended");
+            e.printStackTrace();
+        }
+
+
+    }
+
     private void GetUsernameAndGameId()
     {
         Intent intent = getIntent();
@@ -172,6 +204,13 @@ public class OpponentBoardActivity extends AppCompatActivity
 
     public void ShowMyBoard(View view) {
         Intent i = new Intent(this, MyBoardActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+    }
+
+    public void switchToMainScreen(){
+        Intent i = new Intent(this, MainScreen.class);
+        i.putExtra(USER_NAME, _username);
         i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
     }
