@@ -153,6 +153,7 @@ public class MyBoardActivity extends AppCompatActivity {
                                     _shipsPoints.add(thisSquare);
                                     if (_shipsNumber == MAX_SHIPS_NUMBER) {
                                         _instructions.setText("Ships placement completed.");
+                                        _shipsNumber++;
                                     }
                                     else
                                     {
