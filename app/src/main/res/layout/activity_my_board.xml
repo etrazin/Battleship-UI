@@ -53,6 +53,16 @@
         android:onClick="commitShips"/>
 
     <Button
+        android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Board"
+        app:layout_constraintTop_toBottomOf="@+id/my_board_grid"
+        app:layout_constraintLeft_toRightOf="@id/commit_ships"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="584dp"
+        android:onClick="clearShips"/>
+    <Button
         android:id="@+id/show_opponent_board"
         android:layout_width="395dp"
         android:layout_height="wrap_content"

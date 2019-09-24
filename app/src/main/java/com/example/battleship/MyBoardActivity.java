@@ -55,15 +55,7 @@ public class MyBoardActivity extends AppCompatActivity {
         getUserNameAndGameId();
         client = new OkHttpClient();
 
-        //set text to place ships
-        _shipsPlacement = findViewById(R.id.placeShips);
-        _shipsPlacement.setText("Tap squares to place your ships.");
-
-        //set text to place first square of first ship
-        _shipsNumber=1;
-        _squareNumber=1;
-        _instructions=findViewById(R.id.instructions);
-        _instructions.setText("Select square "+_squareNumber+" of ship "+_shipsNumber+".");
+        initializeBoard();
 
         //create game board
         //todo: make board size dynamic andor use integers file from values
@@ -73,6 +65,21 @@ public class MyBoardActivity extends AppCompatActivity {
 
         //setup onclick listener for game board
         SetupOnclickListener();
+
+
+    }
+    //initialize board on startup and in case of clear
+    private void initializeBoard()
+    {
+        //set text to place ships
+        _shipsPlacement = findViewById(R.id.placeShips);
+        _shipsPlacement.setText("Tap squares to place your ships.");
+
+        //set text to place first square of first ship
+        _shipsNumber=1;
+        _squareNumber=1;
+        _instructions=findViewById(R.id.instructions);
+        _instructions.setText("Select square "+_squareNumber+" of ship "+_shipsNumber+".");
 
         //initialize currently selected square (to impossible square)
         _currentlySelectedSquare=new GridPoint(-1,-1);
@@ -116,14 +123,14 @@ public class MyBoardActivity extends AppCompatActivity {
                 {
                     if (_selectedSquares.contains(position))
                     {
-                        //toast that square already selected
+                        toastString("Square already selected!");
                     }
                     else
                         {
                         if (_squareNumber == 1)
                         {
                             //change color to occupied
-                            SetSquareToOccupied(parent, position);
+                            ChangeSquareStatus(parent, position, Cell.Status.OCCUPIED);
 
                             _selectedSquares.add(position);
                             _squareNumber = 2;
@@ -131,8 +138,6 @@ public class MyBoardActivity extends AppCompatActivity {
                             _currentlySelectedSquare = thisSquare;
                             _shipsPoints.add(thisSquare);
                             _instructions.setText("Select square " + _squareNumber + " of ship " + _shipsNumber + ".");
-                            //todo: (maybe overkill) change color of adjacent squares
-
                         } else
                             {
                             if (_squareNumber == 2)
@@ -141,7 +146,7 @@ public class MyBoardActivity extends AppCompatActivity {
                                 GridPoint thisSquare = GridPoint.ConvertPositionToPoint(position);
                                 if (_currentlySelectedSquare.adjacent(thisSquare))
                                 {
-                                    SetSquareToOccupied(parent, position);
+                                    ChangeSquareStatus(parent, position,Cell.Status.OCCUPIED);
                                     _selectedSquares.add(position);
                                     _squareNumber = 1;
                                     _currentlySelectedSquare = thisSquare;
@@ -156,7 +161,7 @@ public class MyBoardActivity extends AppCompatActivity {
                                     }
                                 }
                                 else {
-                                    //Toast "select adjacent to first square"
+                                    toastString("Select square adjacent to previous square!");
                                 }
                             }
                         }
@@ -168,11 +173,11 @@ public class MyBoardActivity extends AppCompatActivity {
         });
     }
 
-    private void SetSquareToOccupied(AdapterView<?> parent, int position)
+    private void ChangeSquareStatus(AdapterView<?> parent, int position,Cell.Status cellStatus)
     {
         _myBoard.notifyDataSetChanged();
         Cell cell = (Cell) parent.getAdapter().getItem(position);
-        cell.setStatus(Cell.Status.OCCUPIED);
+        cell.setStatus(cellStatus);
     }
 
 
@@ -181,6 +186,17 @@ public class MyBoardActivity extends AppCompatActivity {
     {
         ShipPlacement[] shipPlacements = makeShipPlacementsArray();
         sendPlacementToserver(shipPlacements);
+    }
+
+    //sends ships info to server
+    public void clearShips(View view)
+    {
+        for (Integer position : _selectedSquares)
+        {
+            ChangeSquareStatus(_myBoardGrid,position, Cell.Status.VACANT);
+        }
+
+        initializeBoard();
     }
 
     ShipPlacement [] makeShipPlacementsArray(){

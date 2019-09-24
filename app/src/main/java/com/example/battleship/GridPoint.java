@@ -38,7 +38,7 @@ public class GridPoint {
         }
     }
 
-    //returns true if 2 point are adjacent
+    //returns true if 2 points are adjacent (diagonally is not adjacent)
     public boolean adjacent(GridPoint otherPoint)
     {
         if (((Math.abs(this.x-otherPoint.x)==1)&&(this.y==otherPoint.y))||
