@@ -620,11 +620,12 @@ color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
 color colorAccent
-color colorInvalid
+color colorHit
 color colorMissed
 color colorOccupied
 color colorPrimary
 color colorPrimaryDark
+color colorTemp
 color colorUnknown
 color colorVacant
 color design_bottom_navigation_shadow_color
@@ -1083,6 +1084,7 @@ id alignMargins
 id all
 id always
 id async
+id attackShips
 id auto
 id barrier
 id beginning
@@ -1178,6 +1180,8 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id opponent_board_grid
+id opponentsBoard
 id outline
 id packed
 id parallax
@@ -1254,7 +1258,6 @@ id text_input_password_toggle
 id textinput_counter
 id textinput_error
 id textinput_helper_text
-id texxtView3
 id time
 id title
 id titleDividerNoCustom

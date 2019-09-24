@@ -28,8 +28,6 @@ public class OkHttpHelper {
         Gson gson=new Gson();
         String content=gson.toJson(payLoad);
 
-
-
         MediaType PLAIN=MediaType.parse("text/plain");
 
         RequestBody body = RequestBody.create(PLAIN, content);
