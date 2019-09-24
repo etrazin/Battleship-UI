@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\User\\Desktop\\Battleship-UI\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rXC\\values-en-rXC.xml",
+            "outputFile": "C:\\dev\\Battleship2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rXC\\values-en-rXC.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-2\\files-2.1\\4903ddc5b86c4f0f81841b9bb8ce7ec3\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Elchanan\\.gradle\\caches\\transforms-2\\files-2.1\\02afe871082e219010c995893705d404\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-2\\files-2.1\\24aa72fb104895982cbd124adf353979\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Elchanan\\.gradle\\caches\\transforms-2\\files-2.1\\1236650ae554d1749d0c43237be949ed\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

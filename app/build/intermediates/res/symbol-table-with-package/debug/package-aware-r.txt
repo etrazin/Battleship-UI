@@ -1136,6 +1136,9 @@ id forever
 id game_id
 id ghost_view
 id gone
+id grey
+id greyHelp
+id greyNeutral
 id group_divider
 id groups
 id hi_title
@@ -1195,6 +1198,9 @@ id placeShips
 id progress_circular
 id progress_horizontal
 id radio
+id red
+id redHelp
+id redHit
 id register
 id right
 id right_icon
@@ -1279,6 +1285,9 @@ id vertical
 id view_offset_helper
 id visible
 id waiting_for_player
+id white
+id whiteHelp
+id whiteMiss
 id wins
 id withText
 id wrap
