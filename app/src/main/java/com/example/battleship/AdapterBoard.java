@@ -20,9 +20,8 @@ public class AdapterBoard extends ArrayAdapter<Cell> {
         inflater = LayoutInflater.from(context);
     }
 
-    /**
-     * sets appearance color according to playerNum and cell.Status
-     */
+
+    //  sets appearance color according to and cell.Status
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = inflater.inflate(R.layout.layout_cell, parent, false);
@@ -57,10 +56,9 @@ public class AdapterBoard extends ArrayAdapter<Cell> {
         return view;
     }
 
-    /**
-     * populates board with vacant cells
-     */
-    public void addCells(GridView gridView, int numCells) {
+
+        //populates board with vacant cells
+        public void addCells(GridView gridView, int numCells) {
         gridView.setAdapter(this);
         for (int i = 0; i < numCells; i++)
             this.add(new Cell(Cell.Status.VACANT));

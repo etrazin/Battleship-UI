@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MyBoardActivity"></activity>
         <activity android:name=".OpponentBoardActivity" />
-        <activity android:name=".GameplayActivity" />
         <activity android:name=".MainScreen" />
         <activity android:name=".MainActivity">
             <intent-filter>

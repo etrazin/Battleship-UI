@@ -223,18 +223,6 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void onButtonClickForTesting(View view)
-    {
-        Intent intent = new Intent(this, OpponentBoardActivity.class);
-        Bundle extras = new Bundle();
-        extras.putString("GAME_ID", "6909b894-9147-437b-96ac-cce80b6cb18b");
-        extras.putString("USER_NAME", "345");
-        intent.putExtras(extras);
-        startActivity(intent);
-
-        //MyBoardActivity m=new MyBoardActivity();
-        //SwitchActivity(m);
-    }
     public void SwitchActivity(Activity newActivity)
     {
         Intent intent=new Intent(this,newActivity.getClass());
